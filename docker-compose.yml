@@ -1,0 +1,26 @@
+version: '2'
+
+volumes:
+  cs-data:
+    external: True
+
+services:
+  game:
+    image: cm2network/csgo
+    container_name: main-csgo2
+    network_mode: host
+    environment:
+    - SRCDS_TOKEN
+    - SRCDS_RCONPW
+    - SRCDS_PW
+    - SRCDS_TICKRATE=64
+    - SRCDS_MAXPLAYERS=32
+    - SRCDS_GAMETYPE=1
+    - SRCDS_GAMEMODE=0
+    - SRCDS_MAPGROUP=mg_armsrace
+    entrypoint: /entrypoint
+    volumes:
+    - ./docker-entrypoint.sh:/entrypoint
+    - cs-data:/home/steam/csgo-dedicated
+    - ./server.cfg:/home/steam/csgo-dedicated/csgo/cfg/server.cfg
+
